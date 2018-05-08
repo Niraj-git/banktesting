@@ -1,0 +1,53 @@
+Create a Bank Demo application
+==========================================
+
+A person can do following in Bank :
+- create bank account
+- show his account details
+- deposit amount
+- withdraw amount
+- get bank statement (Future Enhancement)
+
+Hints :
+----------------------------
+=> Create class of Account
+=> Account should have following variables : 
+- account_number, 
+- account_holder_name, 
+- balance
+
+=> Account should have following methods : 
+- deposite, 
+- withdraw, 
+- print_transactions (Future Enhancement)
+- print_account_detail
+
+=> Bank should an Array in which objects of Accounts will be stored
+=> Run while loop for following choices : 
+- create account, 
+- deposite, 
+- withdraw, 
+- print_transactions, 
+- print_account_detail, 
+- exit
+
+
+Account Methods description:
+----------------------------
+=> deposite
+- should accept amount as parameter
+- should return updated balance
+- validate amount entered by user (Future enhancement)
+
+=> withdraw
+- should accept amount as parameter
+- should return updated balance
+- validate amount entered by user (Future enhancement)
+- should not withdraw with zero balance (Future enhancement)
+
+=> print_transactions
+- should print all the transactions of account
+
+=> print_account_detail
+- should print account_number, account_holder_name, balance of account
+
