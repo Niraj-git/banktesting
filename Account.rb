@@ -1,49 +1,64 @@
 class Bank
-  attr_accessor :amount, :balance, :acc
+  attr_accessor :accounts, :amount, :balance
   
      def initialize()
-      @acc = []
+      @accounts = []
     end
   
     def create_account()
-      puts"Enter Account Holder Name :"
-      @name = gets.chomp.to_i
-      puts"Enter your Address :" 
-      @address = gets 
-      puts"Enter your Contact Number :" 
-      @mob = gets.chomp.to_i
-      puts"Balance of Account :"
-      @balance = 0      
+      print "Enter Account Holder Name : "
+      name = gets.chomp
+      print "Enter your Address : " 
+      address = gets.chomp
+      print "Enter your Contact Number : " 
+      mobile = gets.chomp
+      account = Account.new(name, mobile, address)
+      account.account_number = @accounts.size + 1
+      @accounts.push(account)
+      return account
     end        
+    
+    def searchaccount(acountno)      
+      acfound = @accounts.detect { |account| account.account_number == acountno }
+      return acfound
+    end
     
     def get_allaccounts()
       @acc.map{|p| p.account_number}.join(", ")    
     end        
 
-    def deposite(amount)
-      @amount = amount
-      @balance = @balance + @amount
+    def deposite(acountno,amount)
+      acfound1 = searchaccount(acountno)     
+      acfound1.balance = acfound1.balance + amount.to_i
     end 
     
-    def withdraw(amount)
+    def withdraw(acountno,amount)
+      acfound1 = searchaccount(acountno)     
       if(@balance == 0)
-        puts"Unable to withdraw your account balance is 0."
+        puts"Unable to withdraw, your account balance is 0."
       else 
-        @amount = amount    
-        @balance = @balance - @amount
+      acfound1.balance = acfound1.balance - amount.to_i
       end      
     end 
+    
+     def print_account_detail(acountno)
+      acfound1 = searchaccount(acountno)     
+      puts "Your account Name : #{acfound1.account_holder_name}"
+      puts "Your Account number : #{acfound1.account_number} "
+      puts "Your account balance is #{acfound1.balance}"
+    end      
     
 end
 
 class Account
-  attr_accessor :account_number, :account_holder_name, :transactions
+  attr_accessor :account_number, :account_holder_name, :transactions, :balance, :mobile, :address, :amount
     
-    def initialize(acno,acname,bal)
-      @account_number = acno
-      @account_holder_name = acname 
+    def initialize(name, mobile, address)
+      @account_holder_name = name 
       @balance = 0
-#      @transactions = []
+      @mobile = mobile
+      @address = address
+      @transactions = []
     end
     
     def balance()
@@ -51,30 +66,29 @@ class Account
     end  
 
     def print_transactions()
-      @account_number
-      @account_holder_name
-      @balance
+      print "Enter Account Holder Name : "
+      name = gets.chomp
+      transaction = 
+      
+      @transactions.push(transaction)
+      account = Account.new(name, mobile, address)
+      account.account_number = @accounts.size + 1
+      @accounts.push(account)
+      return account
     end 
     
     def get_alltransactions()    
+      @transactions.map{|p| p.account_number}.join(", ")
     end
 
-    def print_account_detail()
-      puts"Account Number : #{acno}"
-      puts"Account Holder Name : #{acname}"
-      puts"Balance of Account : #{bal}"
-    end      
+
     
 end
 
-anand = Account.new("001114178","Anand","50000")
-niraj = Account.new("002214166","Niraj","15000")
-
-
-bank = Bank.new
+niraj_bank = Bank.new
 ch = nil
 
-while ch != 1 do
+while ch != 0 do
 
   puts"List of Operations :"
   puts"1) create account"
@@ -89,22 +103,38 @@ while ch != 1 do
   result = nil
   case ch
   when 1
-    result = bank.create_account()
+    account = niraj_bank.create_account()
+    puts "Your account Name : #{account.account_holder_name}"
+    puts "Your Account number : #{account.account_number}"
+    puts "Your account balance is #{account.balance}"
   when 2
-    result = bank.deposite(2000)
+    puts "Your Account number : "
+    num = gets.chomp.to_i
+    puts "Amount you want to deposit :"
+    amo = gets.chomp
+    puts"Your account balance is :"
+    result = niraj_bank.deposite(num, amo)
+
   when 3
-    result = bank.withdraw(1000)
+    puts "Your Account number : "
+    num = gets.chomp.to_i
+    puts "Amount you want to withdraw :"
+    amo = gets.chomp.to_i
+    puts"Your account balance is :"
+    result = niraj_bank.withdraw(num, amo)    
   when 4
     result = niraj.print_transactions()
   when 5
-    result = niraj.print_account_detail()
+    puts "Your Account number : "
+    num = gets.chomp.to_i
+    result = niraj_bank.print_account_detail(num)
   when 6
      exit(0)
   else
     "You gave me #{ch} -- which is not in the list."
   end
 
-  puts" Result of Operation : #{result}"
+  puts" #{result}"
 
   puts"Do you want to continue ? 1 for yes / 0 for no"
   ch = gets.chomp.to_i
