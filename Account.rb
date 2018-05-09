@@ -70,6 +70,17 @@ class Bank
       puts "Your account balance is #{acfound1.balance}"
     end      
     
+    def edit_customer_detail(acountno)
+      acfound1 = searchaccount(acountno)     
+      print "Enter Account Holder Name : "
+      acfound1.account_holder_name = gets.chomp
+      print "Enter your Address : " 
+      acfound1.address = gets.chomp
+      print "Enter your Contact Number : " 
+      acfound1.mobile = gets.chomp            
+      return acfound1
+    end      
+    
 end
 
 class Account
@@ -96,7 +107,7 @@ end
 niraj_bank = Bank.new
 ch = nil
 
-while ch == 1 or 2 or 3 or 4 or 5 do
+while ch == 1 or 2 or 3 or 4 or 5 or 6 do
   puts "\n"
   puts "=========================================="
   puts "        --Banking Application--"
@@ -109,7 +120,8 @@ while ch == 1 or 2 or 3 or 4 or 5 do
   puts "3) withdraw"
   puts "4) print_transactions"
   puts "5) print_account_detail"
-  puts "6) exit"
+  puts "6) edit_customer_detail"
+  puts "7) exit"
   puts "___________________________________________"
   print "Choose option to performance operation :"
   ch = gets.chomp.to_i
@@ -133,23 +145,24 @@ while ch == 1 or 2 or 3 or 4 or 5 do
     num = gets.chomp.to_i
     print "Amount you want to withdraw :"
     amo = gets.chomp.to_i
-    result = niraj_bank.withdraw(num, amo)    
+    niraj_bank.withdraw(num, amo)    
     puts "Your account balance is : #{account.balance}"
   when 4
     print "Enter Account Number : "
     num = gets.chomp.to_i
-    result = niraj_bank.print_transactions(num)
+    niraj_bank.print_transactions(num)
   when 5
     print "Your Account number : "
     num = gets.chomp.to_i
-    result = niraj_bank.print_account_detail(num)
+    niraj_bank.print_account_detail(num)
   when 6
+    print "Your Account number : "
+    num = gets.chomp.to_i
+    niraj_bank.edit_customer_detail(num)
+  when 7
      exit(0)
   else
     "You gave me #{ch} -- which is not in the list."
   end
-  
-#  print"Do you want to continue ? 1 for yes / 0 for no :"
-#  ch = gets.chomp.to_i
 end
 
