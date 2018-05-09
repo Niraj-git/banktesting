@@ -28,22 +28,30 @@ class Bank
     end        
 
     def deposite(acountno,amount)
-      acfound1 = searchaccount(acountno)     
-      acfound1.balance = acfound1.balance + amount.to_i
-      acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
-      acfound1 
+      if(amount.to_i > 0)
+        acfound1 = searchaccount(acountno)     
+        acfound1.balance = acfound1.balance + amount.to_i
+        acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
+        acfound1 
+      else
+        puts "Please enter valid input."
+      end
     end 
     
     def withdraw(acountno,amount)
       acfound1 = searchaccount(acountno)     
-      if(@balance == 0)
-        puts"Unable to withdraw, your account balance is 0."
-      else 
-        acfound1.balance = acfound1.balance - amount.to_i
-        acfound1.transactions.push("Rs. #{amount} withdrawn. Available Balance is #{acfound1.balance}")
-      end
+      if(amount.to_i <= 0)
+        puts "Amount value should not be negative or zero."
+      else
+        if(acfound1.balance == 0 )
+          puts"Unable to withdraw, your account balance is 0."
+        else
+          acfound1.balance = acfound1.balance - amount.to_i
+          acfound1.transactions.push("Rs. #{amount} withdrawn. Available Balance is #{acfound1.balance}")
+        end
+      end 
       acfound1
-    end 
+    end
     
     def print_transactions(acountno)
       acfound1 = searchaccount(acountno)     
@@ -53,7 +61,7 @@ class Bank
       print transactions      
     end 
     
-     def print_account_detail(acountno)
+    def print_account_detail(acountno)
       acfound1 = searchaccount(acountno)     
       puts "Your account Name : #{acfound1.account_holder_name}"
       puts "Your Account number : #{acfound1.account_number} "
@@ -132,7 +140,7 @@ while ch != 0 do
   else
     "You gave me #{ch} -- which is not in the list."
   end
-
+  
   print"Do you want to continue ? 1 for yes / 0 for no :"
   ch = gets.chomp.to_i
 end
