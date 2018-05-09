@@ -48,17 +48,19 @@ class Bank
         else
           acfound1.balance = acfound1.balance - amount.to_i
           acfound1.transactions.push("Rs. #{amount} withdrawn. Available Balance is #{acfound1.balance}")
+          acfound1
         end
-      end 
-      acfound1
+      end       
     end
     
     def print_transactions(acountno)
       acfound1 = searchaccount(acountno)     
-      print "Account number : #{acfound1.account_number}"
-      print "All transactions"
+      puts "Account number : #{acfound1.account_number}"
+      puts "\n"
+      puts "All transactions"
       transactions = acfound1.transactions.join("\n")
-      print transactions      
+      puts transactions      
+      puts "\n"      
     end 
     
     def print_account_detail(acountno)
@@ -94,39 +96,45 @@ end
 niraj_bank = Bank.new
 ch = nil
 
-while ch != 0 do
-
-  puts "List of Operations :"
+while ch == 1 or 2 or 3 or 4 or 5 do
+  puts "\n"
+  puts "=========================================="
+  puts "        --Banking Application--"
+  puts "=========================================="
+  puts "\n"
+  puts ": List of Operations :"
+  puts "-----------------------"
   puts "1) create account"
   puts "2) deposite"
   puts "3) withdraw"
   puts "4) print_transactions"
   puts "5) print_account_detail"
   puts "6) exit"
-
+  puts "___________________________________________"
   print "Choose option to performance operation :"
   ch = gets.chomp.to_i
   result = nil
   case ch
   when 1
     account = niraj_bank.create_account()
+    puts "\n"
     puts "Your account Name : #{account.account_holder_name}"
     puts "Your Account number : #{account.account_number}"
-    puts "Your account balance is #{account.balance}"
+    puts "Your account balance : #{account.balance}"
   when 2
     print "Your Account number : "
     num = gets.chomp.to_i
     print "Amount you want to deposit :"
     amo = gets.chomp
     account = niraj_bank.deposite(num, amo)
-    puts"Your account balance is : #{account.balance}"
+    puts "Your account balance is : #{account.balance}"
   when 3
     print "Your Account number : "
     num = gets.chomp.to_i
     print "Amount you want to withdraw :"
     amo = gets.chomp.to_i
-    print"Your account balance is :"
     result = niraj_bank.withdraw(num, amo)    
+    puts "Your account balance is : #{account.balance}"
   when 4
     print "Enter Account Number : "
     num = gets.chomp.to_i
@@ -141,7 +149,7 @@ while ch != 0 do
     "You gave me #{ch} -- which is not in the list."
   end
   
-  print"Do you want to continue ? 1 for yes / 0 for no :"
-  ch = gets.chomp.to_i
+#  print"Do you want to continue ? 1 for yes / 0 for no :"
+#  ch = gets.chomp.to_i
 end
 
