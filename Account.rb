@@ -64,7 +64,7 @@ class Bank
     def print_transactions(acountno)
       acfound1 = searchaccount(acountno)     
       if acfound1.nil?
-            puts"Account not found."
+        puts"Account not found."
       else
         puts "Account number : #{acfound1.account_number}"
         puts "\n"
@@ -78,7 +78,7 @@ class Bank
     def print_account_detail(acountno)
       acfound1 = searchaccount(acountno)     
       if acfound1.nil?
-            puts"Account not found."
+        puts"Account not found."
       else
         puts "Your account Name : #{acfound1.account_holder_name}"
         puts "Your Account number : #{acfound1.account_number} "
