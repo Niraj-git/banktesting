@@ -20,7 +20,7 @@ class Bank
     
     def searchaccount(acountno)      
       acfound = @accounts.detect { |account| account.account_number == acountno }
-      return acfound
+        return acfound
     end
     
     def get_allaccounts()
@@ -29,12 +29,16 @@ class Bank
 
     def deposite(acountno,amount)
       if(amount.to_i > 0)
-        acfound1 = searchaccount(acountno)     
-        acfound1.balance = acfound1.balance + amount.to_i
-        acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
-        acfound1 
+        acfound1 = searchaccount(acountno)  
+        if acfound1.nil?
+          puts"Account not found."
+        else
+          acfound1.balance = acfound1.balance + amount.to_i
+          acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
+          acfound1 
+        end
       else
-        puts "Please enter valid input."
+        puts "Please enter valid Amount."
       end
     end 
     
@@ -139,13 +143,15 @@ while ch == 1 or 2 or 3 or 4 or 5 or 6 do
     print "Amount you want to deposit :"
     amo = gets.chomp
     account = niraj_bank.deposite(num, amo)
-    puts "Your account balance is : #{account.balance}"
+    if !account.nil?
+      puts "Your account balance is : #{account.balance}"
+    end
   when 3
     print "Your Account number : "
     num = gets.chomp.to_i
     print "Amount you want to withdraw :"
     amo = gets.chomp.to_i
-    niraj_bank.withdraw(num, amo)    
+    niraj_bank.withdraw(num, amo)        
     puts "Your account balance is : #{account.balance}"
   when 4
     print "Enter Account Number : "
