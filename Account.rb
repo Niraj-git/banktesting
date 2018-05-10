@@ -20,7 +20,7 @@ class Bank
     
     def searchaccount(acountno)      
       acfound = @accounts.detect { |account| account.account_number == acountno }
-      return acfound
+        return acfound
     end
     
     def get_allaccounts()
@@ -29,12 +29,16 @@ class Bank
 
     def deposite(acountno,amount)
       if(amount.to_i > 0)
-        acfound1 = searchaccount(acountno)     
-        acfound1.balance = acfound1.balance + amount.to_i
-        acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
-        acfound1 
+        acfound1 = searchaccount(acountno)  
+        if acfound1.nil?
+          puts"Account not found."
+        else
+          acfound1.balance = acfound1.balance + amount.to_i
+          acfound1.transactions.push("RS. #{amount} deposited Available Balance is #{acfound1.balance}")
+          acfound1 
+        end
       else
-        puts "Please enter valid input."
+        puts "Please enter valid Amount."
       end
     end 
     
@@ -46,39 +50,55 @@ class Bank
         if(acfound1.balance == 0 )
           puts"Unable to withdraw, your account balance is 0."
         else
-          acfound1.balance = acfound1.balance - amount.to_i
-          acfound1.transactions.push("Rs. #{amount} withdrawn. Available Balance is #{acfound1.balance}")
-          acfound1
+          if acfound1.nil?
+            puts"Account not found."
+          else
+            acfound1.balance = acfound1.balance - amount.to_i
+            acfound1.transactions.push("Rs. #{amount} withdrawn. Available Balance is #{acfound1.balance}")
+            acfound1
+          end
         end
       end       
     end
     
     def print_transactions(acountno)
       acfound1 = searchaccount(acountno)     
-      puts "Account number : #{acfound1.account_number}"
-      puts "\n"
-      puts "All transactions"
-      transactions = acfound1.transactions.join("\n")
-      puts transactions      
-      puts "\n"      
+      if acfound1.nil?
+        puts"Account not found."
+      else
+        puts "Account number : #{acfound1.account_number}"
+        puts "\n"
+        puts "All transactions"
+        transactions = acfound1.transactions.join("\n")
+        puts transactions      
+        puts "\n"      
+      end
     end 
     
     def print_account_detail(acountno)
       acfound1 = searchaccount(acountno)     
-      puts "Your account Name : #{acfound1.account_holder_name}"
-      puts "Your Account number : #{acfound1.account_number} "
-      puts "Your account balance is #{acfound1.balance}"
+      if acfound1.nil?
+        puts"Account not found."
+      else
+        puts "Your account Name : #{acfound1.account_holder_name}"
+        puts "Your Account number : #{acfound1.account_number} "
+        puts "Your account balance is #{acfound1.balance}"
+      end
     end      
     
     def edit_customer_detail(acountno)
-      acfound1 = searchaccount(acountno)     
-      print "Enter Account Holder Name : "
-      acfound1.account_holder_name = gets.chomp
-      print "Enter your Address : " 
-      acfound1.address = gets.chomp
-      print "Enter your Contact Number : " 
-      acfound1.mobile = gets.chomp            
-      return acfound1
+      acfound1 = searchaccount(acountno)
+      if acfound1.nil?
+        puts"Account not found."
+      else
+        print "Enter Account Holder Name : "
+        acfound1.account_holder_name = gets.chomp
+        print "Enter your Address : " 
+        acfound1.address = gets.chomp
+        print "Enter your Contact Number : " 
+        acfound1.mobile = gets.chomp            
+        return acfound1
+      end
     end      
     
 end
@@ -139,14 +159,18 @@ while ch == 1 or 2 or 3 or 4 or 5 or 6 do
     print "Amount you want to deposit :"
     amo = gets.chomp
     account = niraj_bank.deposite(num, amo)
-    puts "Your account balance is : #{account.balance}"
+    if !account.nil?
+      puts "Your account balance is : #{account.balance}"
+    end
   when 3
     print "Your Account number : "
     num = gets.chomp.to_i
     print "Amount you want to withdraw :"
     amo = gets.chomp.to_i
-    niraj_bank.withdraw(num, amo)    
-    puts "Your account balance is : #{account.balance}"
+    niraj_bank.withdraw(num, amo)        
+    if !account.nil?
+      puts "Your account balance is : #{account.balance}"
+    end
   when 4
     print "Enter Account Number : "
     num = gets.chomp.to_i
